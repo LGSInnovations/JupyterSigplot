@@ -12,6 +12,7 @@ import sys
 import ipywidgets as widgets
 import numpy as np
 import requests
+from IPython.display import display
 from traitlets import (
     Unicode,
     Bool,
@@ -20,8 +21,6 @@ from traitlets import (
 )
 
 from ._version import __version__ as version_string
-
-from IPython.display import display
 
 _py3k = sys.version_info[0] == 3
 if _py3k:
@@ -145,7 +144,7 @@ class Plot(widgets.DOMWidget):
                 raise TypeError(
                     'Array passed to overlay_array must be numeric type'
                 )
-            arguments[0] = memoryview(array.astype(np.float32))
+            arguments[0] = memoryview(array.astype(np.float32)).tobytes()
             # cause the sync to happen
             self.sync_command_and_arguments({
                 "command": command,
